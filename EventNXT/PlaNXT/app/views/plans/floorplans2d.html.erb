@@ -1,0 +1,642 @@
+<div class="main-container">
+  <div class="row main-row">
+    <div class="accordion accordion-container accordion-flush col-3">
+      <div class="accordion-item">
+        <h2 class="accordion-header">
+          <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseTopLayer" aria-expanded="false" aria-controls="flush-collapseTopLayer">
+            Top Layer
+          </button>
+        </h2>
+        <div id="flush-collapseTopLayer" class="accordion-collapse collapse items">
+          <!-- Dynamically rendered -->
+        </div>
+      </div>
+      <div class="accordion-item">
+        <h2 class="accordion-header">
+          <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseFurnitureLayer" aria-expanded="false" aria-controls="flush-collapseFurnitureLayer">
+            Furniture Layer
+          </button>
+        </h2>
+        <div id="flush-collapseFurnitureLayer" class="accordion-collapse collapse items">
+          <!-- Dynamically rendered -->
+        </div>
+      </div>
+      <div class="accordion-item">
+        <h2 class="accordion-header">
+          <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseElectricLayer" aria-expanded="false" aria-controls="flush-collapseElectricLayer">
+            Electric Layer
+          </button>
+        </h2>
+        <div id="flush-collapseElectricLayer" class="accordion-collapse collapse items">
+          <!-- Dynamically rendered -->
+        </div>
+      </div>
+      <div class="accordion-item">
+        <h2 class="accordion-header">
+          <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseStaffLayer" aria-expanded="false" aria-controls="flush-collapseStaffLayer">
+            Staff Layer
+          </button>
+        </h2>
+        <div id="flush-collapseStaffLayer" class="accordion-collapse collapse items">
+          <!-- Dynamically rendered -->
+        </div>
+      </div>
+    </div>
+    <div class="col-6 dropzone-container">
+      <div id="dropzone"></div>
+      <input type="range"  class="slider" id="myRange" style="width: 80%"  >
+      <p id="rangeValue">Plan time: </p>
+    </div>
+    <div class="accordion-container col-3">
+      <!-- Plan Deteil -->
+      <div class="accordion-item" style="margin:1em">
+        <h2 class="accordion-header">
+          <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapsePlanDetail" aria-expanded="false" aria-controls="flush-collapsePlanDetail">
+            Plan Detail
+          </button>
+        </h2>
+        <div id="flush-collapsePlanDetail" class="accordion-collapse collapse show items" style="margin-top:1em">
+          <div class="accordion-body">
+            <div class="row g-3 align-items-center">
+              <div class="col-auto">
+                <label for="planName" class="col-form-label">Name</label>
+              </div>
+              <div class="col-auto">
+                <input type="text" id="planName" class="form-control disabled-label" value="<%= @plan.name %>">
+              </div>
+            </div>
+            <div class="row g-3 align-items-center" style="margin-top:1em">
+              <div class="col-auto">
+                <label for="planVenueWidth" class="col-form-label">Venue Width (ft)</label>
+              </div>
+              <div class="col-auto">
+                <input type="number" id="planVenueWidth" class="form-control disabled-label" value="<%= @plan.venue_width %>">
+              </div>
+            </div>
+            <div class="row g-3 align-items-center" style="margin-top:1em">
+              <div class="col-auto">
+                <label for="planVenueLength" class="col-form-label">Venue Length (ft)</label>
+              </div>
+              <div class="col-auto">
+                <input type="number" id="planVenueLength" class="form-control disabled-label" value="<%= @plan.venue_length %>">
+              </div>
+            </div>
+            <div class="row g-3 align-items-center" style="margin-top:1em">
+              <div class="col-12">
+                <p style="margin-bottom:0em">Steps</p>
+              </div>
+              <div class="col">
+                <div class="dropdown">
+                  <input class="form-control" id="combobox" type="text" data-bs-toggle="dropdown" aria-expanded="false" readonly>
+                  <ul class="dropdown-menu" aria-labelledby="combobox">
+                    <% @plan.steps.each do |step| %>
+                      <% start_minutes = step.start_time.hour * 60 + step.start_time.min %>
+                      <% end_minutes = step.end_time.hour * 60 + step.end_time.min %>
+                      <% start_date =  step.start_date%>
+                      <button class="dropdown-item" type="button" data-id=<%= step.id %> data-start="<%= start_minutes %>" data-end="<%= end_minutes %>" data-start-time="<%= step.start_time%>">
+                        <%= step.start_time.strftime('%Y-%m-%d %H:%M') + "~" + step.end_time.strftime('%H:%M') %>
+                      </button>
+                    <% end %>
+                  </ul>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="container">
+    <div> 
+      <table class="table" id="itemsTable" style="margin-top: 3em">   
+        <thead class="thead-light">
+          <th style="vertical-align: middle;">Name</th>
+          <th style="vertical-align: middle;">Item Type</th>
+          <th style="vertical-align: middle;">Setup Start</th>
+          <th style="vertical-align: middle;">Setup End</th>
+          <th style="vertical-align: middle;">Breakdown Start</th>
+          <th style="vertical-align: middle;">Breakdown End</th>
+        </thead>
+        <tbody id="items-table-body">
+          <!-- Table rows will be added dynamically -->
+
+        </tbody>
+      </table>
+    <div>
+
+    <div class="button-container d-flex" style="margin-top: 3em">
+      <%= link_to "Back", plans_path, class: "btn btn-secondary" %>
+      <%= link_to "Save", "", class: "btn btn-primary me-auto", style:"background-color:#478ac9; margin-left: 1em;" %>
+      <!--Preview in 3D button that links to Preview in 3D page-->
+      <button type="button" class="btn btn-primary" id="preview3dLink">Preview in 3D</button>
+    </div>
+  </div>
+
+  <%= render "plans/createItemModal" %>
+  <%= render "plans/updateItemModal" %>
+  
+</div>
+<%= javascript_include_tag "items" %>
+
+<script>
+  (function() {
+    var ratio = 1;
+    var currentStep = -1;
+    var items = [];
+    var current_time = new Date();
+
+    window.generateItems = generateItems;
+    $(document).ready(function() {
+      generateItems();
+      initComboBox();
+      
+
+      // get plan's venue width and height
+      const planWidth = <%= @plan.venue_width %>;
+      const planLength = <%= @plan.venue_length %>; 
+            
+      // change dropzone width and height
+      const dropzone = document.getElementById('dropzone');
+      const boundingBox = dropzone.getBoundingClientRect();
+      const dropzoneWidth = boundingBox.width;
+      const dropzoneHeight = boundingBox.height;
+
+      var ratio_width = dropzoneWidth / planWidth;
+      var ratio_length = dropzoneHeight / planLength;
+      ratio = Math.min(ratio_width, ratio_length);
+      dropzone.style.width = `${planWidth * ratio}px`;
+      dropzone.style.height = `${planLength * ratio}px`;  
+
+      loadItems(currentStep);
+    });
+
+    const draggables = document.querySelectorAll('.draggable');
+    let offsetX, offsetY;
+
+    // JavaScript to call the 'search' action using AJAX with fetch
+    async function searchItemsByStep(stepId) {
+      const response = await fetch(`/items/search?step_id=${stepId}`, {
+        method: 'GET',
+        headers: {
+          'Content-Type': 'application/json',
+          'X-CSRF-Token': document.querySelector('meta[name="csrf-token"]').getAttribute('content')
+        }
+      })
+
+      if(response.ok) {
+        const data = await response.json();
+        return data;
+      } else {
+        console.error('Network response was not ok');
+      }
+    }
+
+
+    function showItems(step_id){
+
+      // clear all dropped items
+      const droppedItems = document.querySelectorAll('[data-cloned="true"]');
+      droppedItems.forEach(item => {
+        item.remove();
+      });
+
+      for( item of items){
+        var droppedElementId = "item-"
+        for(let itemType in itemTemplates){
+          if (itemTemplates[itemType].displayName == item.name){
+            droppedElementId += itemType;
+            break;
+          }
+        }
+
+        if (item['setup_start_time'] != null && item['setup_end_time'] != null && item['breakdown_start_time'] != null && item['breakdown_end_time'] != null){
+          setupStartT = new Date(parseDateTime(item['setup_start_time'], true));
+          setupEndT = new Date(parseDateTime(item['setup_end_time'], true));
+          breakdownStartT = new Date(parseDateTime(item['breakdown_start_time'], true));
+          breakdownEndT = new Date(parseDateTime(item['breakdown_end_time'], true));
+
+          current_time = new Date(current_time);
+
+          if (setupStartT <= current_time && current_time <= breakdownEndT){
+            createItem(droppedElementId, item);
+          }
+        }
+      }
+    }
+
+
+    async function loadItems(stepId) {
+      // clear all items
+      items.length = 0;
+
+      // clear all table rows
+      const tableBody = document.getElementById('items-table-body');
+      tableBody.innerHTML = '';
+
+      var _items = await searchItemsByStep(stepId);
+
+      for( item of _items){
+        var droppedElementId = "item-"
+        for(let itemType in itemTemplates){
+          if (itemTemplates[itemType].displayName == item.name){
+            droppedElementId += itemType;
+            break;
+          }
+        }
+        items.push(item);
+        // Add table row when new item is dragged and placed with newly generated ID
+        addTableRow(item.id);
+      }
+
+      showItems(stepId);
+    }
+
+    function generateItems() {
+      for (const item_type in itemTemplates) { // Assuming 'categories' is an array or object of all possible categories
+          const item = itemTemplates[item_type];
+          const container = document.getElementById(`flush-collapse${item.category}`);
+          container.innerHTML = '';
+      }
+
+      for (const item_type in itemTemplates) {
+        const item = itemTemplates[item_type];
+        const container = document.getElementById(`flush-collapse${item.category}`);
+
+        const div = document.createElement('div');
+        const category = item.category;
+        div.className = 'draggable';
+        div.draggable = 'true';
+        div.id = `item-${item_type}`;
+
+        if (item.image){
+          div.style.backgroundImage = `url(${item.image})`;
+          div.style.backgroundSize = 'contain';
+          div.style.backgroundRepeat = 'no-repeat';
+          div.style.backgroundPosition = 'center';
+        }
+        
+        container.appendChild(div);
+        makeDraggable(div);
+      }
+    }
+
+    function handleDragStart(e) {
+      e.dataTransfer.setData('text/plain', this.id);
+      const rect = this.getBoundingClientRect();
+      offsetX = e.clientX - rect.left;
+      offsetY = e.clientY - rect.top;
+    }
+
+    function createItem(droppedElementId, item){
+      const element = document.getElementById(droppedElementId);
+      const clonedElement = element.cloneNode(true);
+      var inch2feet = 1/12;
+
+      var x = (item.xpos - inch2feet*item.width/2)*ratio;
+      var y = (item.zpos - inch2feet*item.depth/2)*ratio;
+
+      clonedElement.style.position = 'absolute';
+      clonedElement.style.left = `${x}px`;
+      clonedElement.style.top = `${y}px`;
+
+      clonedElement.id = parseInt(item.id);
+      // clonedElement.setAttribute('item-type', item.type);
+      clonedElement.setAttribute('item-name', item.name);
+      clonedElement.setAttribute('item-model', item.model);
+      // clonedElement.setAttribute('item-real-type', real_type);
+      clonedElement.setAttribute('item-rotation', item.rotation);
+      clonedElement.setAttribute('item-width', item.width);
+      clonedElement.setAttribute('item-depth', item.depth);
+      clonedElement.setAttribute('item-xpos', item.xpos);
+      clonedElement.setAttribute('item-zpos', item.zpos);
+      clonedElement.setAttribute('data-cloned', 'true');  
+
+      // set width, height, rotation, description
+      clonedElement.style.width = `${inch2feet* item.width*ratio}px`;
+      clonedElement.style.height = `${inch2feet* item.depth*ratio}px`;
+      clonedElement.style.transform = `rotate(${item.rotation}deg)`;
+      
+      dropzone.appendChild(clonedElement);
+      makeDraggable(clonedElement);
+
+    }
+
+
+
+    function handleDrop(e) {
+      e.preventDefault();
+      const droppedElementId = e.dataTransfer.getData('text/plain');
+      const element = document.getElementById(droppedElementId);
+      const selectedStepId = currentStep;
+
+      const item_type = droppedElementId.split('-')[1];
+      const item = itemTemplates[item_type];
+
+      const boundingBox = dropzone.getBoundingClientRect();
+      const x = e.clientX - boundingBox.left - offsetX;
+      const y = e.clientY - boundingBox.top - offsetY;
+
+      
+      inch2feet = 1/12;
+      if (!element.getAttribute('data-cloned')) {
+        openCreateModal(item_type, item, x, y, ratio, selectedStepId, loadItems);
+      } else {
+        element.style.position = 'absolute';
+        element.style.left = `${x}px`;
+        element.style.top = `${y}px`;
+        width = element.getAttribute('item-width');
+        depth = element.getAttribute('item-depth');
+        element.setAttribute('item-xpos', x/ratio+inch2feet*width/2); // Added to udpate x-pos of object after being moved
+        element.setAttribute('item-zpos', y/ratio+inch2feet*depth/2); // Added to udpate z-pos of object after being moved
+        makeDraggable(element);
+
+        // find the item in the items array
+        var _item = items.find(item => item.id == element.id);
+        _item.xpos = x / ratio + inch2feet * width / 2;
+        _item.zpos = y / ratio + inch2feet * depth / 2;
+
+        fetch(`/items/${_item.id}`, { // Make sure the URL is correct as per your API endpoint
+          method: 'PUT',
+          headers: {
+            "Content-Type": "application/json",
+            "X-CSRF-Token": document.querySelector("[name='csrf-token']").content
+          },
+          body: JSON.stringify({
+            item: {
+              xpos: _item.xpos, // Updated xpos
+              zpos: _item.zpos  // Updated zpos
+            }
+          })
+        }).then(response => {
+          if (response.ok) {
+            // Handle success
+            console.log("Item updated successfully");
+          } else {
+            // Handle error
+            console.error("Failed to update item");
+          }
+        }).catch(error => {
+          // Handle network error
+          console.error("Network error:", error);
+        });
+      }
+    }
+
+    function makeDraggable(element) {
+      element.draggable = true;
+      element.addEventListener('dragstart', handleDragStart);
+      element.addEventListener('contextmenu', handleRightClick);
+    }
+
+    function handleRightClick(e) {
+      e.preventDefault();
+      const clickedElement = e.currentTarget;
+      var item_id = clickedElement.getAttribute('id');
+
+      var selected_item = items.find(item => item.id == item_id);
+      
+      openUpdateModal(selected_item, currentStep, loadItems);
+    }
+    
+    // Get the table body element
+    const tableBody = document.getElementById('items-table-body');
+    
+    // Function to add a new row to the table
+    function addTableRow(itemId) {
+
+      var item = items.find(item => item.id == itemId);
+      var setupStartTime = parseDateTime(item.setup_start_time, true);
+      var setupEndTime = parseDateTime(item.setup_end_time, true);
+      var breakdownStartTime = parseDateTime(item.breakdown_start_time, true);
+      var breakdownEndTime = parseDateTime(item.breakdown_end_time, true);
+
+      const newRow = tableBody.insertRow();
+
+      newRow.innerHTML = `
+        <td>item-${items.length}</td>
+        <td>${item.name}</td>
+        <td>${setupStartTime}</td>
+        <td>${setupEndTime}</td>
+        <td>${breakdownStartTime}</td>
+        <td>${breakdownEndTime}</td>
+      `;
+    }
+    
+    // Function to remove a row from the table
+    function removeTableRow(itemId) {
+      const rows = tableBody.getElementsByTagName('tr');
+      for (let i = 0; i < rows.length; i++) {
+        const row = rows[i];
+        const cellText = row.cells[0].textContent.trim();
+        if (cellText === itemId) {
+          tableBody.deleteRow(i);
+          break;
+        }
+      }
+    }
+
+
+    draggables.forEach(makeDraggable);
+
+    const dropzone = document.getElementById('dropzone');
+    dropzone.addEventListener('dragover', e => e.preventDefault());
+    dropzone.addEventListener('drop', handleDrop);
+
+    const preview3dlink = document.getElementById("preview3dLink");
+    preview3dlink.addEventListener("click", function(event) {
+        event.preventDefault();  // Prevent default link behavior
+
+        const planWidth = <%= @plan.venue_width %>;
+        const planLength = <%= @plan.venue_length %>; 
+
+        const snapshot = {
+          venue_length: planLength,
+          venue_width: planWidth,
+          items: {}
+        };
+        const itemList = document.getElementById('dropzone').querySelectorAll('.draggable');
+        for (let i = 0; i < itemList.length; i++) {
+          const item = itemList[i];
+          const itemID = item.id;
+          const itemType = item.getAttribute('item-real-type');
+          const itemName = item.getAttribute('item-name');
+          const itemModel = item.getAttribute('item-model');
+          const itemWidth = item.getAttribute('item-width');
+          const itemDepth = item.getAttribute('item-depth');
+          const itemRotation = item.getAttribute('item-rotation');
+          const itemXPos = parseFloat(item.getAttribute('item-xpos'));
+          const itemZPos = parseFloat(item.getAttribute('item-zpos')); // very weird, zpos is the height in 3D, zpos is the y position in 3D
+          snapshot.items[itemID] = {
+            item_type: itemType,
+            item_name: itemName,
+            item_model: itemModel,
+            item_width: itemWidth,
+            item_depth: itemDepth,
+            item_rotation: itemRotation,
+            item_xpos: itemXPos,
+            item_zpos: itemZPos
+          };
+        }
+
+        const encodedData = encodeURIComponent(JSON.stringify(snapshot));
+        // // Construct the full URL
+        const baseURL = "/plans/preview3d";
+        const fullURL = baseURL + "?snapshot_data=" + encodedData;
+
+        // Navigate to the URL
+        window.open(fullURL, "_blank");
+    });
+
+
+    // for the combobox
+    // Set the first step as the default value if it exists
+    const combobox = document.getElementById("combobox");
+    const dropdownItems = document.querySelectorAll(".dropdown-item");
+
+    // for the slider
+    const slider = document.getElementById('myRange');
+
+    function initComboBox(){
+      if (dropdownItems.length > 0) {
+        const firstStep = dropdownItems[0].textContent.trim();
+        combobox.value = firstStep;
+        updateSlider(dropdownItems[0]);
+        currentStep = parseInt(dropdownItems[0].getAttribute('data-id'));
+      }
+    }
+
+    // Event listener for filtering combobox options based on input
+    combobox.addEventListener("input", function () {
+      var inputVal = this.value.toLowerCase();
+      dropdownItems.forEach(function (item) {
+        var text = item.textContent.toLowerCase();
+        if (text.includes(inputVal)) {
+          item.closest(".dropdown-menu").style.display = "block";
+          item.style.display = "block";
+        } else {
+          item.style.display = "none";
+        }
+      });
+
+      // If the input is empty, hide the dropdown menu
+      if (inputVal === "") {
+        document.querySelector(".dropdown-menu").style.display = "none";
+      }
+    });
+
+    // Event listener to show the dropdown menu when the input gains focus
+    combobox.addEventListener("focus", function () {
+      this.select(); // Optional: Select the input text when clicked
+      var dropdownMenu = document.querySelector(".dropdown-menu");
+      if (this.value) {
+        dropdownMenu.style.display = "block";
+      }
+    });
+
+    // Event listener to set the value when an item is clicked and hide the dropdown
+    dropdownItems.forEach(function (item) {
+      item.addEventListener("click", function () {
+        combobox.value = this.textContent.trim();
+        document.querySelector(".dropdown-menu").style.display = "none";
+      });
+    });
+
+    // Function to update slider based on the step selected
+    function updateSlider(stepElement){
+      const startTime = parseInt(stepElement.getAttribute('data-start'));
+      const endTime = parseInt(stepElement.getAttribute('data-end'));
+      slider.min = startTime;
+      slider.max = endTime;
+      slider.value = startTime; // Set initial slider value to start time
+      updateTime(slider.value - slider.min, stepElement.getAttribute('data-start-time'));
+    };
+
+    function addMinutesToDate(date, minutes) {
+        return new Date(date.getTime() + minutes * 60000);
+    }
+
+    // Function to update the date displayed based on the slider value
+    function updateTime(value, start_time){
+      var date = new Date(start_time);
+      var month = date.getUTCMonth() + 1;
+      var day = date.getUTCDate();
+      var year = date.getUTCFullYear();
+
+      date = addMinutesToDate(date, value);
+      
+      var hour = date.getUTCHours();
+      var minute = date.getMinutes();
+
+      minute = minute < 10 ? '0'+minute : minute;
+      var strTime = year + '-' + month + '-' + day + ' ' + hour + ':' + minute;
+      current_time = strTime;
+      document.getElementById('rangeValue').innerHTML = "Plan time: " + strTime;
+    }
+
+    slider.oninput = function() {
+      start_time = document.querySelector('.dropdown-item[data-id="' + currentStep + '"]').getAttribute('data-start-time');
+      updateTime(slider.value - slider.min, start_time);
+      showItems(currentStep);
+    };
+
+    // Event listener for combobox selections
+    dropdownItems.forEach((item) => {
+      item.addEventListener('click', function() {
+        combobox.value = this.textContent.trim();
+        document.querySelector('.dropdown-menu').style.display = 'none';
+        
+        // Update the slider to match the selected step's time range
+        updateSlider(this);
+        var stepId = this.getAttribute('data-id');
+        currentStep = parseInt(stepId);
+        loadItems(currentStep);
+      });
+    });
+    })();
+
+</script>
+
+
+<style>
+  .main-container {
+    margin-bottom: 3em;
+  }
+  .main-row {
+    height: 80vh;
+  }
+  .accordion-container {
+    overflow-y: auto;
+    height: 100%;
+  }
+  .accordion-collapse {
+    padding: 1em;
+    width: 100% !important;
+  }
+
+  .dropzone-container {
+    background: lightblue;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+    align-items: center;
+  }
+  #dropzone {
+    background: white;
+    width: 80%;
+    height: 80%;
+    position: relative;
+  }
+  .items {
+    display: flex;
+    flex-wrap: wrap;
+    width: 200px;
+    border: 1px solid #000;
+  }
+
+  .disabled-label {
+    color: #6c757d; /* This is Bootstrap's default for disabled text */
+    pointer-events: none; /* This prevents the label from receiving mouse events */
+  }
+
+</style>
