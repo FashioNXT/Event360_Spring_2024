@@ -69,21 +69,8 @@ The responsibility of User Story 7 has been assigned to each team member. The ta
 
 ## Legacy Projects Summary:
 
-# Current State Assessment:
-The 2023F team made commendable efforts with the provided resources, faithfully implementing project progress recommendations. They extensively wrote acceptance tests and provided a detailed Final Report. Despite initial client dissatisfaction, challenges such as lacking test cases were faced.
-
-It is recommended to review the Final Report.pdf for a comprehensive understanding of the project's final state. The MVC pattern is followed, with potential issues arising from controller definitions deviating from OOP principles.
-
-# Challenges and Issues:
-The client lacks confidence in the project due to legacy issues. Recommendations include running test automation scripts, seeking help from linters and debuggers, and acknowledging the difficulty of communication with past project developers. The client expects production-ready deliverables, necessitating an honest assessment of the current state.
-
-Issues such as integrating 2D and 3D floor plans in PlaNXT, and frustrations with user authentication, require attention. Some projects depend on paid services.
-
-# Technical Specifics:
-Deviation from syllabus recommendations is noted, with opinionated choices in libraries and frameworks. It is suggested to adopt tools used by the 2023F team. Automation using git flow is recommended. Attempts to use Docker for platform-neutral development are noted, with complications mentioned in the Final Report.pdf.
-
-Detailed information about specific projects (EventNXT, CastNXT, PlaNXT) is provided, including challenges faced and recommended actions.
-
-
-# Resource Allocation:
-Considerations about role switching, memory limitations, and energy constraints are discussed. A recommendation is made for 2-3 members to work consistently on each of the three projects, with dedicated roles and oversight by a Scrum Master.
+This is a legacy software development on the same topic from the previous semesters,  since the topic has not been modified significantly from last semesters in general, we  will need to focus on certain perspectives where we can basically make certain  improvement or changes to the previous established framework for FashioNXT web  applications design, including the three closely related subprojects.  
+This is in general not a quite trivial and transparent task, since the first step is to  understand what has been essentially implemented in the previous semesters. Of  course this means that we need to first understand how the previous teams were  able to guarantee they established certain functions to the application. That being said, the crucial part in our understanding is that we should focus on how the  functions realized are compatible with the essential framework. Only through this  particular approach can we possibly have the chance to really be able to manage to  establish the new expectations on the application. Then when we understand the  basic picture of the new functions we would like to improve and even create we  need to carefully write down the user stories and the corresponding storyboards and  sketching mechanism to guarantee the compatibility of our new realization with the  previous realized framework in a perfect way. 
+For instance for the corresponding realization and improvement on the event  arrangement what we really have to do is to focus on the implementation of the  methods as well as how this may affect the previous framework and the essential  parts of the software which has been established.  
+As for the example on the login function, which needs to be a comprehensive  modification and improvement of the previous login implementation, we need to  definitely try our best to understand how the previous login implementation are realized  and then we can build upon the previous login considerations and then basically make  the organization or reorganization of the whole separated unlinked authentication  considerations. Separately implemented authentications will be meaningless here if we  do not emphasize well on the corresponding mechanisms on how to reorganize the  functions. 
+It will be also very important for us to possibly make certain connections well with the  customers and even the previous developers. This will help us to better  understand the programming implementation along the legacy application  development well, such as how the methods and classes are related, how the ideas  were implemented to realize the functions from the previous user stories. Through this thorough understanding, we will have the chance to know what are the best entry points for us to get started and how we should eventually implement everything  needed in this framework in this legacy circumstance.
