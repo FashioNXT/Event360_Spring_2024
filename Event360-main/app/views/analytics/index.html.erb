@@ -1,0 +1,122 @@
+<nav style="--bs-breadcrumb-divider: '>';" class="border-bottom mb-4" aria-label="breadcrumb">
+  <ol class="breadcrumb">
+    <li class="breadcrumb-item"><a href="/dashboard">Home</a></li>
+    <li class="breadcrumb-item"><a href="#"><%= @app %></a></li>
+    <li class="breadcrumb-item active">User Analytics</li>
+  </ol>
+</nav>
+<div class="row align-items-center justify-content-between g-3 mb-5 col-12 col-md-auto">
+  <h1 class="mb-0 pg-title"><%= @app %> User Analytics</h1>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/chart.js@3.7.0/dist/chart.min.js"></script>
+<script>
+  var userCountsJson = <%= @user_counts_json.html_safe %>;
+  var activeUserCountsJson = <%= @active_users_count_json.html_safe %>;
+  var userCountsByLastAccessJson = <%= @user_counts_by_last_access_json.html_safe %>;
+  var userFeesDistributionJson = <%= @user_fees_distribution_json.html_safe %>;
+</script> 
+<div class="px-3">
+  <div class="row justify-content-between mb-5">
+    <div class="col-6 col-md-4 col-xxl-2 text-center border-start border-bottom-0 border-end pb-4"><span class="fs-3 lh-1 text-primary"></span>
+      <h1 class="fs-3 pt-3"><%= @number_of_users %></h1>
+      <p class="fs--1 mb-0">Accounts</p>
+    </div>
+    <div class="col-6 col-md-4 col-xxl-2 text-center border-start border-bottom-0 border-end pb-4"><span class="fs-3 lh-1 text-primary"></span>
+      <h1 class="fs-3 pt-3"><%= @number_of_locations %></h1>
+      <p class="fs--1 mb-0">Locations</p>
+    </div>
+    <div class="col-6 col-md-4 col-xxl-2 text-center border-start border-bottom-0 border-end pb-4"><span class="fs-3 lh-1 text-primary"></span>
+      <h1 class="fs-3 pt-3"><%=@registrations_30_days%></h1>
+      <p class="fs--1 mb-0">Registrations Last 30 Days</p>
+    </div>
+    <div class="col-6 col-md-4 col-xxl-2 text-center border-start border-bottom-0 border-end pb-4"><span class="fs-3 lh-1 text-primary"></span>
+      <h1 class="fs-3 pt-3">$<%= @total_fees_last_30_days %></h1>
+      <p class="fs--1 mb-0">Transcation in Last 30 Days</p>
+    </div>
+    <div class="col-6 col-md-4 col-xxl-2 text-center border-start border-bottom-0 border-end pb-4"><span class="fs-3 lh-1 text-primary"></span>
+      <h1 class="fs-3 pt-3"><%= @active_user_count %></h1>
+      <p class="fs--1 mb-0">Active Users</p>
+    </div>
+  </div>
+</div>
+<div class="mx-n4 px-4 mx-lg-n6 px-lg-6 bg-white pt-6 pb-3 border-y border-300 row">
+  <div class="page-container">
+    <div class="col-10 row border-end pe-4">
+      <% if @user_counts_json != "[]" %>
+        <div id="pieChart-container" class="chart-container col-6">
+          <h2>User Type Chart</h2>
+          <canvas id="pieChart" class="m-auto">Sorry, browser not supported!</canvas>
+        </div>
+      <% end %>
+      <% if @active_users_count_json != "[]" %>
+        <div id="barChart-container" class="chart-container col-6">
+          <h2>User Count By Status</h2>
+          <canvas id="barChart">Sorry, browser not supported!</canvas>
+        </div>
+      <% end %>
+      <% if @user_counts_by_last_access_json != "[]" %>
+        <div id="lineChart-container" class="chart-container col-6">
+          <h2>Last Access Date User Count</h2>
+          <canvas id="lineChart">Sorry, browser not supported!</canvas>
+        </div>
+      <% end %>
+      <% if @user_fees_distribution_json != "[]" %>
+        <div id="histogramChart-container" class="chart-container col-6">
+          <h2>30-day Fee Distribution</h2>
+          <canvas id="histogramChart">Sorry, browser not supported!</canvas>
+        </div>
+      <% end %>
+    </div>
+    <div class="col-2 mt-3">
+      <ul>
+        <% if @user_counts_json !="[]" %>
+          <li class="list-group-item"><label><input class="form-check-input" type="checkbox" name="chart" value="pieChart" checked> User Type Chart</label></li>
+        <% end %>
+        <% if @active_users_count_json !="[]" %>
+          <li class="list-group-item"><label><input class="form-check-input" type="checkbox" name="chart" value="barChart" checked> User Count By Status</label></li>
+        <% end %>
+        <% if @user_counts_by_last_access_json !="[]" %>
+          <li class="list-group-item"><label><input class="form-check-input" type="checkbox" name="chart" value="lineChart" checked> Last Access Date User Count</label></li>
+        <% end %>
+        <% if @user_fees_distribution_json !="[]" %>
+          <li class="list-group-item"><label><input class="form-check-input" type="checkbox" name="chart" value="histogramChart" checked> 30-day Fee Distribution</label></li>
+        <% end %>
+      </ul>
+    </div>
+  </div>
+</div>
+<%= javascript_include_tag "user_analytics" %>
+<script>
+  var pieChartContainer = document.getElementById("pieChart-container");
+  var barChartContainer = document.getElementById("barChart-container");
+  var lineChartContainer = document.getElementById("lineChart-container");
+  var histogramChartContainer = document.getElementById("histogramChart-container");
+
+  document.querySelectorAll("input[type='checkbox']").forEach(function(checkbox) {
+    checkbox.addEventListener("change", function(event) {
+      if (this.checked) {
+        var chartId = "#" + this.value;
+        if (chartId === "#pieChart") {
+          pieChartContainer.style.display = "block";
+        } else if (chartId === "#barChart") {
+          barChartContainer.style.display = "block";
+        } else if (chartId === "#lineChart") {
+          lineChartContainer.style.display = "block";
+        } else if (chartId === "#histogramChart") {
+          histogramChartContainer.style.display = "block";
+        }
+      } else {
+        var chartId = "#" + this.value;
+        if (chartId === "#pieChart") {
+          pieChartContainer.style.display = "none";
+        } else if (chartId === "#barChart") {
+          barChartContainer.style.display = "none";
+        } else if (chartId === "#lineChart") {
+          lineChartContainer.style.display = "none";
+        } else if (chartId === "#histogramChart") {
+          histogramChartContainer.style.display = "none";
+        }
+      }
+    });
+  });
+</script>

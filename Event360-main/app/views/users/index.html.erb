@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>FashioNXT CRM Tool</title>
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <%= csrf_meta_tags %>
+    <%= csp_meta_tag %>
+    <%= stylesheet_link_tag 'application', media: 'all', 'data-turbolinks-track': 'reload' %>
+    <!-- Font Awesome -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet" />
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap" rel="stylesheet" />
+    <!-- MDB -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/6.0.0/mdb.min.css" rel="stylesheet" />
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/6.0.0/mdb.min.js"></script>
+  </head>
+  <body>
+    <div class="login-wrapper">
+      <h2 class="login-title"> EVENTS 360 </h2>
+      <% flash.each do |message_type, message| %>
+        <div id="login-alert" class="alert alert-<%= message_type %>"><b><i><%= message %></i></b></div>
+      <% end %>
+      <hr/>
+      <ul class="nav nav-pills nav-justified mb-3" id="ex1" role="tablist">
+        <li class="nav-item" role="presentation">
+          <a class="nav-link active" id="tab-login" data-mdb-toggle="pill" href="#pills-login" role="tab"
+                aria-controls="pills-login" aria-selected="true">Login</a>
+        </li>
+        <li class="nav-item" role="presentation">
+          <a class="nav-link" id="tab-register" data-mdb-toggle="pill" href="#pills-register" role="tab"
+                aria-controls="pills-register" aria-selected="false">Register</a>
+        </li>
+      </ul>
+      <div class="tab-content">
+        <div class="tab-pane fade show active" id="pills-login" role="tabpanel" aria-labelledby="tab-login">
+          <form action="/sessions" method="POST">
+            <input type="hidden" name="authenticity_token" value="<%=form_authenticity_token%>">
+            <!-- Email input -->
+            <div class="form-outline mb-4">
+              <input type="email" name = "login[email]" id="registerEmail" class="form-control" />
+              <label class="form-label" for="registerEmail">Email</label>
+            </div>
+            <!-- Password input -->
+            <div class="form-outline mb-4">
+              <input type="password" name="login[password]" id="loginPassword" class="form-control" />
+              <label class="form-label" for="login[password]">Password</label>
+            </div>
+            <!-- 2 column grid layout -->
+            <div class="row mb-4">
+              <div class="col-md-6 d-flex justify-content-center">
+              </div>
+            </div>
+            <%#Hidden fields%>
+            <% params.each do |key, value| %>
+              <% next if %w(controller action).include?(key) %>
+              <%= hidden_field_tag key, value %>
+            <% end %>
+            <!-- Submit button -->
+            <%# <input type="submit" name="submit" class="submit"> %>
+            <button type="submit" name="submit" class="btn btn-primary btn-block mb-3">Sign in</button>
+            <%= link_to "Forgot Your Password?", password_reset_path %>
+          </form>
+        </div>
+        <div class="tab-pane fade" id="pills-register" role="tabpanel" aria-labelledby="tab-register">
+          <form action="/users" method="POST">
+            <input type="hidden" name="authenticity_token" value="<%=form_authenticity_token%>">
+            <!-- User Type radio button -->
+            <div class="form-outline mb-4">
+              <div class="form-outline mb-4">
+                <label class="form-label" for="radio">User Type</label>
+              </div>
+              <div class="form-check form-check-inline">
+                <input class="form-check-input" type="radio" name="user[user_type]" id="user" value="user" checked>
+                <label class="form-check-label" for="user">User</label>
+              </div>
+              <div class="form-check form-check-inline">
+                <input class="form-check-input" type="radio" name="user[user_type]" id="admin" value="admin" required>
+                <label class="form-check-label" for="admin">Administrator</label>
+              </div>
+            </div>
+            <!-- Name input -->
+            <div class="form-outline mb-4">
+              <input type="name" name="user[name]" id="registerName" class="form-control" />
+              <label class="form-label" for="registerName">Name</label>
+            </div>
+            <!-- Email input -->
+            <div class="form-outline mb-4">
+              <input type="email" name="user[email]" id="registerEmail" class="form-control" />
+              <label class="form-label" for="registerEmail">Email</label>
+            </div>
+            <!-- Password input -->
+            <div class="form-outline mb-4">
+              <input type="password" name="user[password]" id="registerPassword" class="form-control" />
+              <label class="form-label" for="registerPassword">Password</label>
+            </div>
+            <!-- Repeat Password input -->
+            <div class="form-outline mb-4">
+              <input type="password" name="user[password_confirmation]" id="registerRe-enterPassword" class="form-control" />
+              <label class="form-label" for="registerRe-enterPassword">Re-enter password</label>
+            </div>
+            <%#Hidden fields%>
+            <% params.each do |key, value| %>
+              <% next if %w(controller action).include?(key) %>
+              <%= hidden_field_tag key, value %>
+            <% end %>
+            <!-- Submit button -->
+            <button type="submit" name="submit" class="btn btn-primary btn-block mb-3">Register</button>
+          </form>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>

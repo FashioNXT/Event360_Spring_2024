@@ -1,0 +1,35 @@
+<nav style="--bs-breadcrumb-divider: '>';" class="border-bottom mb-4" aria-label="breadcrumb">
+  <ol class="breadcrumb">
+    <li class="breadcrumb-item"><a href="/dashboard">Home</a></li>
+    <li class="breadcrumb-item"><a href="#"><%= @app %></a></li>
+    <li class="breadcrumb-item"><%= link_to "Email Notifications","/app/#{@app}/posts" %></li>
+    <li class="breadcrumb-item active">Email Templates</li>
+  </ol>
+</nav>
+<div class="row align-items-center justify-content-between g-3 mb-5 col-12 col-md-auto">
+  <h1 class="mb-0 pg-title"><%= @app %> Email Templates</h1>
+</div>
+<div class="tbl-wrapper">
+  <%= link_to 'New Template', new_email_template_path %>
+  <br/>
+  <table class="crm-tbl">
+    <br/>
+    <thead>
+      <tr>
+        <th>Title</th>
+        <th>Content</th>
+      </tr>
+    </thead>
+    <tbody>
+      <% @email_templates.each do |template| %>
+        <tr>
+          <td><%= template.title%></td>
+          <td><%= template.content%></td>
+          <td><%= link_to 'Fill In', fill_in_path(title: template.title) %>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+  <br/>
+  <%= link_to 'Back', new_post_path %>
+</div>

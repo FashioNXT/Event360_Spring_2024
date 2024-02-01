@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Users Page</title>
+    <script>
+      $(document).ready(function() {
+          $('#myTable').DataTable({
+              "paging": true,
+              "pageLength": 10,
+          });
+      });
+    </script>
+  </head>
+  <body>
+    <nav style="--bs-breadcrumb-divider: '>';" class="border-bottom mb-4" aria-label="breadcrumb">
+      <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a href="/dashboard">Home</a></li>
+        <li class="breadcrumb-item"><a href="#"><%= @app %></a></li>
+        <li class="breadcrumb-item active">User Management</li>
+      </ol>
+    </nav>
+    <div class="row align-items-center justify-content-between g-3 mb-5 col-12 col-md-auto">
+      <h1 class="mb-0 pg-title"><%= @app %> User Management</h1>
+    </div>
+    <table id="myTable", class="crm-tbl">
+      <thead>
+        <tr>
+          <th>User ID</th>
+          <th>Name</th>
+          <th>Email</th>
+          <th>Membership Type</th>
+          <th>Location</th>
+          <th>Created at</th>
+          <th>Avg minutes<br>
+            last 30 days</th>
+          <th>Fees from transaction<br>
+            last 30 days</th>
+          <th>Access Enabled</th>
+        </tr>
+      </thead>
+      <tbody>
+        <% @response.each do |user| %>
+          <tr>
+            <td><%= user['id'] %></td>
+            <td><%= user['name'] %></td>
+            <td><%= user['email'] %></td>
+            <td><%= user['user_type'] %></td>
+            <td><%= user['location'] %></td>
+            <td><%= user['created_at'] %></td>
+            <td><%= user['average_minutes_used_last_30_days'] %></td>
+            <td><%= user['fees_last_30_days'] %></td>
+            <td><%= user['access_enabled'] %></td>
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
+    <a class="btn p-0 border border-200 btn-support-chat" href="../analytics">
+      <span class="fs-6 btn-text text-primary text-nowrap">Back to User Analytics</span>
+    </a>
+  </body>
+</html>

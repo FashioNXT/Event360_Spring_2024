@@ -1,0 +1,24 @@
+<nav style="--bs-breadcrumb-divider: '>';" class="border-bottom mb-4" aria-label="breadcrumb">
+  <ol class="breadcrumb">
+    <li class="breadcrumb-item"><a href="/dashboard">Home</a></li>
+    <li class="breadcrumb-item"><a href="#"><%= @app %></a></li>
+    <li class="breadcrumb-item"><%= link_to "Email Notifications","/app/#{@app}/posts" %></li>
+    <li class="breadcrumb-item active">New Post</li>
+  </ol>
+</nav>
+<div class="row align-items-center justify-content-between g-3 mb-5 col-12 col-md-auto">
+  <h1 class="mb-0 pg-title">New Post</h1>
+</div>
+<div class="tbl-wrapper container-fluid mx-0">
+    <%= render 'form', post: @post %>
+    <br/>
+    <%= "Recipient types: " %>
+    <% @user_types.each do |type| %>
+      <%= link_to type, bytype_path(user_type: type) %>
+      &nbsp;
+    <% end %>
+    <br/>
+    <%= link_to 'Templates list', email_templates_path %>
+    <br/>
+    <%= link_to 'Back', posts_path %>
+</div>

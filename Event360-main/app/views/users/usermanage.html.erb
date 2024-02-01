@@ -1,0 +1,43 @@
+<nav style="--bs-breadcrumb-divider: '>';" class="border-bottom mb-4" aria-label="breadcrumb">
+  <ol class="breadcrumb">
+    <li class="breadcrumb-item"><a href="/dashboard">Home</a></li>
+    <li class="breadcrumb-item active">CRM USERS</li>
+  </ol>
+</nav>
+<div class="row align-items-center justify-content-between g-3 mb-5 col-12 col-md-auto">
+  <h1 class="mb-0 pg-title">CRM USERS</h1>
+</div>
+<div class="tbl-wrapper">
+  <table class="crm-tbl">
+    <thead>
+      <tr class="filters">
+        <th>Id</th>
+        <th>User</th>
+        <th>Email</th>
+        <th>Created At</th>
+        <th>Updated At</th>
+        <th>User Type</th>
+        <th>Permission</th>
+      </tr>
+    </thead>
+    <tbody>
+      <% checked_permission = session[:checked_permission] || [] %>
+      <% User.all.each do |user| %>
+        <tr>
+          <td><%= user.id %></td>
+          <td><%= user.name %></td>
+          <td><%= user.email %></td>
+          <td><%= user.created_at %></td>
+          <td><%= user.updated_at %></td>
+          <td><%= user.user_type %></td>
+          <td>
+            <input type="checkbox" id="<%= user.id %>" value="<%= user.id %>"<% if checked_permission.include?("#{user.id}") %>checked<% end %> onclick="handleCheckboxChange(this)">
+            <%= label_tag "#{user.id}", 'Enabled' %>
+          </td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+</div>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+<%= javascript_include_tag 'user_permission', "data-turbo-track": "reload" %>

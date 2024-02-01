@@ -1,0 +1,44 @@
+<nav style="--bs-breadcrumb-divider: '>';" class="border-bottom mb-4" aria-label="breadcrumb">
+  <ol class="breadcrumb">
+    <li class="breadcrumb-item"><a href="/dashboard">Home</a></li>
+    <li class="breadcrumb-item"><a href="#"><%= @app %></a></li>
+    <li class="breadcrumb-item active">Email Notifications</li>
+  </ol>
+</nav>
+<div class="row align-items-center justify-content-between g-3 mb-5 col-12 col-md-auto">
+  <h1 class="mb-0 pg-title"><%= @app %> Email Notifications</h1>
+</div>
+<div class="tbl-wrapper">
+  <table class="crm-tbl">
+    <thead>
+      <tr>
+        <th>ID</th>
+        <th>Title</th>
+        <th>Content</th>
+        <th colspan="4"></th>
+      </tr>
+    </thead>
+    <tbody>
+      <% @posts.each do |post| %>
+        <tr>
+          <td><%= post.id %></td>
+          <td><%= post.title %></td>
+          <td><%= simple_format(post.content) %></td>
+          <td><%= link_to 'PDF', post_path(id: post.id, format: :pdf) %></td>
+          <td><%= link_to 'Show', post_path(id: post.id) %></td>
+          <td><%= link_to 'Edit', edit_post_path(id: post.id) %></td>
+          <td><%= link_to 'Destroy', post_path(id: post.id), method: :delete, data: { confirm: 'Are you sure?' } %></td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+</div>
+<br/>
+<div class="tbl-wrapper">
+  <h3>Import Reports</h3>
+  <%= link_to 'New Report', new_post_path %>
+  <br/>
+  <%= link_to 'Templates list', email_templates_path %>
+  <br/>
+  <%= link_to "Reports PDF", posts_path(format: :pdf) %>
+</div>

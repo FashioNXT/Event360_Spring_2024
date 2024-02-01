@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>FashioNXT CRM Tool</title>
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <%= csrf_meta_tags %>
+    <%= csp_meta_tag %>
+    <%= stylesheet_link_tag 'application', media: 'all', 'data-turbolinks-track': 'reload' %>
+    <%= yield :head %>
+  </head>
+  <body>
+    <% if logged_in? %>
+    <nav class="navbar navbar-vertical navbar-expand-lg">
+      <div class="d-flex flex-column navbar-vertical-content">
+        <ul class="navbar-nav flex-column mb-auto">
+          <li>
+            <div class="nav-item-wrapper">
+              <a class="nav-link label-1" href="/dashboard" role="button" data-bs-toggle="" aria-expanded="false">
+                <div class="d-flex align-items-center">
+                  <span class="nav-link-icon">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-house-fill" viewBox="0 0 16 16">
+                      <path d="M8.707 1.5a1 1 0 0 0-1.414 0L.646 8.146a.5.5 0 0 0 .708.708L8 2.207l6.646 6.647a.5.5 0 0 0 .708-.708L13 5.793V2.5a.5.5 0 0 0-.5-.5h-1a.5.5 0 0 0-.5.5v1.293L8.707 1.5Z"/>
+                      <path d="m8 3.293 6 6V13.5a1.5 1.5 0 0 1-1.5 1.5h-9A1.5 1.5 0 0 1 2 13.5V9.293l6-6Z"/>
+                    </svg></span>
+                  <span class="nav-link-text pt-1-wrapper"><span class="nav-link-text pt-1">Home</span></span>
+                </div>
+              </a>
+            </div>
+          </li>
+          <% if admin_user? %>
+            <li>
+              <p class="navbar-vertical-label">Analytics</p>
+              <hr class="navbar-vertical-line">
+              <% @apps.each do |app| %>
+                <div class="nav-item-wrapper">
+                  <%= link_to "/app/#{app}/analytics", class: "nav-link" do %>
+                    <div class="d-flex align-items-center">
+                      <div class="dropdown-indicator-icon">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" fill="currentColor" class="bi bi-caret-down-fill" viewBox="0 0 16 16">
+                          <path d="M7.247 11.14 2.451 5.658C1.885 5.013 2.345 4 3.204 4h9.592a1 1 0 0 1 .753 1.659l-4.796 5.48a1 1 0 0 1-1.506 0z"/>
+                        </svg>
+                      </div>
+                      <span class="nav-link-icon">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16"><path d="M1 11a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1v3a1 1 0 0 1-1 1H2a1 1 0 0 1-1-1v-3zm5-4a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1v7a1 1 0 0 1-1 1H7a1 1 0 0 1-1-1V7zm5-5a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1v12a1 1 0 0 1-1 1h-2a1 1 0 0 1-1-1V2z"/></svg>
+                      </span>
+                      <span class="nav-link-text pt-1-wrapper"><span class="nav-link-text pt-1"><%= app %></span></span>
+                    </div>
+                  <% end %>
+                  <ul class="dropdown">
+                    <li class="nav-item">
+                      <%= link_to "/app/#{app}/analytics", class: "nav-link" do %>
+                        <div class="d-flex align-items-center"><span class="nav-link-text">Analytics</span></div>
+                      <% end %>
+                    </li>
+                    <li class="nav-item">
+                      <%= link_to "/app/#{app}/admin/index", class: "nav-link" do %>
+                        <div class="d-flex align-items-center"><span class="nav-link-text">User Management</span></div>
+                      <% end %>
+                    </li>
+                    <li class="nav-item">
+                      <%= link_to "/app/#{app}/posts", class: "nav-link" do %>
+                        <div class="d-flex align-items-center"><span class="nav-link-text">Emails Notification</span></div>
+                      <% end %>
+                    </li>
+                  </ul>
+                </div>
+              <% end %>
+            </li>
+          <% end %>
+          <li>
+            <% if admin_user? %>
+              <p class="navbar-vertical-label">Management</p>
+              <hr class="navbar-vertical-line">
+              <div class="nav-item-wrapper">
+                <%= link_to "/oauth/applications", class: "nav-link" do %>
+                  <div class="d-flex align-items-center">
+                    <span class="nav-link-icon">
+                      <svg xmlns="http://www.w3.org/2000/svg" width="16px" height="16px" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-clipboard"><path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2"></path><rect x="8" y="2" width="8" height="4" rx="1" ry="1"></rect></svg>
+                    </span>
+                    <span class="nav-link-text pt-1-wrapper"><span class="nav-link-text pt-1">Application Management</span></span></div>
+                <% end %>
+              </div>
+              <div class="nav-item-wrapper">
+                <%= link_to "/crmusers", class: "nav-link" do %>
+                  <div class="d-flex align-items-center">
+                    <span class="nav-link-icon"><svg xmlns="http://www.w3.org/2000/svg" width="16px" height="16px" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path></svg></span>
+                    <span class="nav-link-text pt-1-wrapper"><span class="nav-link-text pt-1">CRM Users</span></span></div>
+                <% end %>
+              </div>
+            <% end %>
+            <div class="nav-item-wrapper">
+              <%= link_to logout_url, class: "nav-link" do %>
+                <div class="d-flex align-items-center">
+                  <span class="nav-link-icon">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-power" viewBox="0 0 16 16"><path d="M7.5 1v7h1V1h-1z"/><path d="M3 8.812a4.999 4.999 0 0 1 2.578-4.375l-.485-.874A6 6 0 1 0 11 3.616l-.501.865A5 5 0 1 1 3 8.812z"/></svg>
+                  </span>
+                  <span class="nav-link-text pt-1-wrapper"><span class="nav-link-text pt-1">Log Out</span></span></div>
+              <% end %>
+            </div>
+          </li>
+        </ul>
+        <hr>
+        <div class="ps-5 d-flex align-items-center link-body-emphasis text-decoration-none">
+          <a class="d-flex align-items-center link-body-emphasis text-decoration-none text-secondary" href='#'>
+            <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="currentColor" class="bi bi-person-circle" viewBox="0 0 16 16">
+              <path d="M11 6a3 3 0 1 1-6 0 3 3 0 0 1 6 0z"/>
+              <path fill-rule="evenodd" d="M0 8a8 8 0 1 1 16 0A8 8 0 0 1 0 8zm8-7a7 7 0 0 0-5.468 11.37C3.242 11.226 4.805 10 8 10s4.757 1.225 5.468 2.37A7 7 0 0 0 8 1z"/>
+            </svg>
+            <strong class="nav-link-text pt-1 ps-3 fs-5"><%= @current_user.name %></strong>
+          </a>
+        </div>
+      </div>
+    </nav>
+    <% end %>
+    <nav class="navbar navbar-top fixed-top navbar-expand" id="navbarDefault">
+      <div class="collapse navbar-collapse justify-content-between navbar-logo">
+        <button class="btn navbar-toggler navbar-toggler-humburger-icon hover-bg-transparent" type="button" data-bs-toggle="collapse" data-bs-target="#navbarVerticalCollapse" aria-controls="navbarVerticalCollapse" aria-expanded="false" aria-label="Toggle Navigation"><span class="navbar-toggle-icon"><span class="toggle-line"></span></span></button>
+        <a class="navbar-brand me-1 me-sm-3" href="/dashboard">
+          <div class="d-flex align-items-center">
+            <%= image_tag "event.jpg", width:"27px" %>
+            <p class="logo-text ms-2 d-none d-sm-block">
+              <% if admin_user? %>
+                FashioNXT CRM Tool
+              <% else %>
+                Events 360
+              <% end %>
+            </p>
+          </div>
+        </a>
+      </div>
+    </nav>
+    <div class="content pb-6">
+      <%= yield %>
+    </div>
+  </body>
+</html>

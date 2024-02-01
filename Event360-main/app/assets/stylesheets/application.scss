@@ -1,0 +1,287 @@
+/*
+ * This is a manifest file that'll be compiled into application.css, which will include all the files
+ * listed below.
+ *
+ * Any CSS and SCSS file within this directory, lib/assets/stylesheets, or any plugin's
+ * vendor/assets/stylesheets directory can be referenced here using a relative path.
+ *
+ * You're free to add application-wide styles to this file and they'll appear at the bottom of the
+ * compiled file so the styles you add here take precedence over styles defined in any other CSS/SCSS
+ * files in this directory. Styles in this file should be added after the last require_* statement.
+ * It is generally better to create a new file per style scope.
+ *
+ *= require_tree .
+ *= require_self
+ */
+@import "bootstrap";
+
+.login-wrapper {
+    margin-left: 25vw;
+    margin-right: 25vw;
+    top: 10vh;
+    padding: 5vw;
+    background-color: #eff2f6;
+    opacity: 0.95;
+}
+
+.login-title {
+    text-align: center;
+    color: #3b71ca;
+}
+
+#login-alert {
+    color: red;
+    background-color: lightsteelblue;
+    text-align: center;
+}
+
+
+.crm-btn:hover {
+    background-color: #3e465b;
+}
+
+.tbl-wrapper {
+    border-radius: 5px;
+    color: black;
+    background-color: #f2f2f2;
+    padding: 20px;
+}
+
+.crm-tbl {
+    border-collapse: collapse;
+    width: 100%;
+    background: #2e5668;
+}
+
+.crm-tbl td,
+.crm-tbl th {
+    border: 1px solid #ddd;
+    padding: 8px;
+    background: white;
+}
+
+.crm-tbl tr:nth-child(even) {
+    background-color: #f2f2f2;
+}
+
+.crm-tbl tr:hover {
+    background-color: #ddd;
+}
+
+.crm-tbl th {
+    padding-top: 12px;
+    padding-bottom: 12px;
+    text-align: left;
+    background-color: #2e5668;
+    color: white;
+}
+
+.crm-tbl td {
+    color: black;
+}
+
+.page-container {
+    display: flex;
+    justify-content: left;
+    align-items: flex-start;
+    padding: 20px;
+}
+
+.chart-container {
+    background-color: white;
+    display: inline-block;
+    margin: 40px 0 20px;
+    text-align: center;
+    position: relative;
+    min-width: 300px;
+}
+
+.app-img {
+    max-width: 100px;
+    /* Set the maximum width to 100 pixels */
+    max-height: 100px;
+    /* Set the maximum height to 100 pixels */
+}
+
+.navbar-vertical.navbar-expand-lg .navbar-vertical-content .navbar-nav .dropdown .nav-link {
+    padding-left: 3.3125rem;
+    scroll-margin-top: 200px;
+}
+
+.navbar-vertical.navbar-expand-lg .nav-item {
+    width: 100%;
+}
+
+.dropdown {
+    list-style: none;
+    padding-left: 0;
+}
+
+.dropdown-indicator-icon {
+    height: 1rem;
+    width: 1rem;
+    min-width: 1rem;
+    color: #8a94ad;
+    margin-left: -1rem;
+    padding-right: 4px;
+    padding-top: 4px;
+    display: flex;
+    justify-content: center;
+}
+
+.navbar-vertical {
+    position: fixed;
+    display: inline-block;
+    z-index: 1020;
+    top: 4rem;
+    padding: 0;
+    background: #fff;
+}
+
+.navbar-vertical.navbar-expand-lg {
+    width: 15.875rem;
+    border-right: 1px solid #cbd0dd;
+}
+
+.navbar-vertical .navbar-vertical-content {
+    height: calc(100vh - 4rem);
+    padding: 1rem 0;
+    overflow-y: auto;
+}
+
+.navbar-vertical .navbar-vertical-content .navbar-nav {
+    font-size: .8rem;
+    font-weight: 600;
+}
+
+.navbar-vertical.navbar-expand-lg .navbar-vertical-content .navbar-nav .nav-link {
+    padding-top: .35rem;
+    padding-bottom: .35rem;
+    padding-left: 1.75rem;
+    margin-left: .75rem;
+    margin-right: .75rem;
+    border-radius: .5rem;
+}
+
+.navbar-vertical .dropdown-indicator .dropdown-indicator-icon {
+    height: 1rem;
+    width: 1rem;
+    min-width: 1rem;
+    color: #8a94ad;
+    margin-left: -0.25rem;
+    display: flex;
+}
+
+.navbar-vertical.navbar-expand-lg .navbar-vertical-content .navbar-nav .nav-link:hover {
+    background-color: #eff2f6;
+}
+
+.navbar-vertical .navbar-vertical-content .navbar-vertical-label {
+    text-transform: uppercase;
+    font-weight: 700;
+    font-size: .64rem;
+    color: #6e7891;
+    margin-bottom: .5rem;
+    margin-top: 1.5rem;
+    padding-left: 2rem;
+}
+
+.navbar-vertical .navbar-vertical-line {
+    display: none;
+}
+
+.navbar-vertical .navbar-vertical-content .nav-link-icon {
+    margin-right: .625rem;
+    min-width: 16px !important;
+    text-align: center;
+}
+
+.navbar-vertical.navbar-expand-lg~.navbar-top~.content {
+    padding-left: 2.5rem;
+    padding-right: 2.5rem;
+    margin-left: 15.875rem;
+}
+
+.navbar-top {
+    font-size: .8rem;
+    font-weight: 600;
+    padding: 0;
+    background: #fff;
+    min-height: 4rem;
+    padding: 0 1.5rem 0 1.5rem;
+    border-bottom: 1px solid #cbd0dd;
+}
+
+.fixed-top {
+    position: fixed;
+    top: 0;
+    right: 0;
+    left: 0;
+    z-index: 1030;
+}
+
+.btn-support-chat {
+    position: fixed;
+    bottom: 2.5rem;
+    right: 3rem;
+    width: 15rem;
+    height: 3rem;
+    display: flex;
+    justify-content: center;
+    background-color: #fff;
+    align-items: center;
+    z-index: 1045;
+    border-radius: 50rem;
+    ;
+    box-shadow: 0px 0px 32px 0px rgba(36, 40, 46, .12);
+}
+
+.btn-support-chat:hover {
+    background-color: #eff2f6 !important;
+}
+
+.content {
+    min-height: 75vh;
+    padding: 2rem 1.5rem 1.5rem 1.5rem;
+}
+
+.mx-lg-n6 {
+    margin-right: -2.5rem !important;
+    margin-left: -2.5rem !important;
+}
+
+.border-y {
+    border-top: 1px solid #e3e6ed !important;
+    border-bottom: 1px solid #e3e6ed !important;
+}
+
+.card-link {
+    color: black;
+    text-decoration: none;
+}
+
+.card-link:hover {
+    color: black;
+    text-decoration: none;
+}
+
+.card {
+    background-size: 90%;
+    background-position: center center;
+    background-repeat: no-repeat;
+}
+
+.floating-box {
+    border: 1px solid #ced4da;
+    border-radius: .25rem;
+}
+
+h1,
+h2 {
+    font-weight: 800;
+}
+
+body {
+    background-color: #f5f7fa;
+    ;
+}

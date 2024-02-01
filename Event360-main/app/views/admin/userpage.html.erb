@@ -1,0 +1,16 @@
+<% content_for :head do %>
+  <script src="https://www.ag-grid.com/archive/25.0.0/dev/@ag-grid-community/all-modules/dist/ag-grid-community.js"></script>
+<% end %>
+<nav style="--bs-breadcrumb-divider: '>';" class="border-bottom mb-4" aria-label="breadcrumb">
+  <ol class="breadcrumb">
+    <li class="breadcrumb-item"><a href="/dashboard">Home</a></li>
+    <li class="breadcrumb-item"><a href="#"><%= @app %></a></li>
+    <li class="breadcrumb-item active">User Management</li>
+  </ol>
+</nav>
+<div class="row align-items-center justify-content-between g-3 mb-5 col-12 col-md-auto">
+  <h1 class="mb-0 pg-title"><%= @app %> User Management</h1>
+</div>
+<div id="myGrid" class="ag-theme-alpine" data-grid-api=<%= @grid %>></div>
+<%# Load JavaScript only after the page is rendered %>
+<%= javascript_include_tag 'userpage', "data-turbo-track": "reload" %>

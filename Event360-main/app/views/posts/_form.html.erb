@@ -1,0 +1,42 @@
+<div class="row">
+<div class="col-md-5">
+<%= form_with(model: post, url: post.new_record? ? posts_path(app: @nxtapp.name) : post_path(app: @nxtapp.name, id: post.id), method: post.new_record? ? :post : :put) do |form| %>
+  <%# this form is used for both new post and edit post. The line above ensures it works for both after adding foreign key. %>
+  <% if post.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(post.errors.count, "error") %> prohibited this post from being saved:</h2>
+
+      <ul>
+        <% post.errors.each do |error| %>
+          <li><%= error.full_message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+  
+  <div class="mb-3 field">
+    <%= form.label :recipient, class: 'form-label' %>
+    <%= form.text_field :recipient, required: true, class: 'form-control' %>
+  </div>
+
+  <div class="mb-3 field">
+    <%= form.label :title, class: 'form-label' %>
+    <%= form.text_field :title, required: true, class: 'form-control' %>
+  </div>
+
+  <div class="mb-3 field">
+    <%= form.label :content, class: 'form-label' %>
+    <%= form.text_area :content, class: 'form-control' %>
+  </div>
+
+  <div class="mb-3 field">
+    <%= form.label :image, class: 'form-label' %>
+    <%= form.file_field :image, class: 'form-control' %>
+  </div>
+
+  <div class="actions">
+    <%= form.submit "Send Post", class: 'btn btn-primary' %>
+  </div>
+<% end %>
+</div>
+</div>

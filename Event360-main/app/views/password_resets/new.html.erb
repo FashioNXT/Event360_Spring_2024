@@ -1,0 +1,17 @@
+<div class="container">
+<div class="row justify-content-center align-items-center" style="height: 75vh;">
+    <div class="col-md-4 floating-box">
+    <h3> Forgot Your Password?</h3>
+    <%= form_with url: password_reset_path do |form| %>
+        <div class="mb-3">
+            <%= form.label :email, class: 'form-label' %>
+            <%= form.text_field :email, class: "form-control", placeholder: "test@test.com"%>
+        </div>
+        <div class="mb-3">
+            <%= form.submit "Reset Password", class: "btn btn-primary"%>
+        </div>
+    <% end %>
+    </div>
+</div>
+</div>
+

@@ -1,0 +1,8 @@
+Hi Administrator,
+
+<%= params[:user].email%>, has requested adminsistrator access to the system.
+
+If you would like to accept this request, please click the link below.
+
+<%= adrq_post_url(token: @token)%>
+

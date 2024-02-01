@@ -1,0 +1,11 @@
+one:
+  uid: 1
+  name: TestNXT
+  redirect_uri: http://localhost:3000/oauth/callback
+  api_url: http://localhost:3000/api/v1
+  homepage_url: http://localhost:3000
+  scopes: read
+  secret: 1234567890
+  confidential: true
+  created_at: <%= 1.day.ago %>
+  updated_at: <%= 1.day.ago %>

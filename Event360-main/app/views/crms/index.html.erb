@@ -1,0 +1,11 @@
+<h1 class="pg-title"><u><%= @app %> Admin Dashboard</u></h1>
+<br>
+<div>
+  <%= link_to "User Management", adminview_path(@app), class: "crm-btn" %>
+</div>
+<div>
+  <%= link_to "View User Analytics", analytics_path(@app), class: "crm-btn" %>
+</div>
+<div>
+  <%= link_to "Send Emails", posts_path, class: "crm-btn" %>
+</div>
