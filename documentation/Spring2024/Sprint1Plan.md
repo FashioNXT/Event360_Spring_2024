@@ -1,4 +1,5 @@
 # Team Roles
+- **Customer:** Tito Chowdhury
 - **Product Owner:** Alex Wise
 - **Scrum Master:** Louis Turrubiartes
 - **Developers:** Amalesh Arivanan, Tiachen Huang, Tong Wu, Xin Tong
